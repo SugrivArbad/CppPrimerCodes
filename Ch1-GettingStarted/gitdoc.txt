@@ -1,0 +1,84 @@
+Setup :
+
+1]
+$ git config --global user.name "Sugriv Arbad"
+$ git config --global user.email "arbadsugriv@gmail.com"
+
+If you want to use a different text editor, such as Emacs, you can do the following:
+$ git config --global core.editor emacs
+
+To set main as the default branch name do:
+$ git config --global init.defaultBranch main
+
+$ git config user.name
+	Sugriv Arbad
+
+you can query Git as to the origin for that value
+$ git config --show-origin user.name
+	file:C:/Users/admin/.gitconfig  Sugriv Arbad
+
+
+Manual pages :
+$ git help config
+$ git config --help
+
+
+Help (short)
+$ git add -h
+$ git config -h
+
+
+
+git init
+git add <file-name>    // directory file, regulare file, pipe file
+
+
+Setting up a
+.gitignore file for your new repository before you get going is generally a good idea so you don’t
+accidentally commit files that you really don’t want in your Git repository.
+The rules for the patterns you can put in the .gitignore file are as follows:
+• Blank lines or lines starting with # are ignored.
+• Standard glob patterns work, and will be applied recursively throughout the entire working
+tree.
+• You can start patterns with a forward slash (/) to avoid recursivity.
+• You can end patterns with a forward slash (/) to specify a directory.
+• You can negate a pattern by starting it with an exclamation point (!).
+Glob patterns are like simplified regular expressions that shells use. An asterisk (*) matches zero or
+more characters; [abc] matches any character inside the brackets (in this case a, b, or c); a question
+mark (?) matches a single character; and brackets enclosing characters separated by a hyphen ([0-
+9]) matches any character between them (in this case 0 through 9). You can also use two asterisks to
+match nested directories; a/**/z would match a/z, a/b/z, a/b/c/z, and so on.
+
+# ignore all .a files
+*.a
+# but do track lib.a, even though you're ignoring .a files above
+!lib.a
+# only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+# ignore all files in any directory named build
+build/
+# ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+# ignore all .pdf files in the doc/ directory and any of its subdirectories
+doc/**/*.pdf
+
+
+
+
+
+you can use git diff to see the changes in the file that are staged and the changes that are unstaged
+$ git diff
+$ git diff --staged   OR    $ git diff --cached
+
+
+
+Run git difftool --tool-help to see what is
+available on your system
+$ git difftool --tool=vimdiff  /// NOT WORKED LATER REALIZED
+$ git config --global diff.tool vimdiff // THIS WORKED
+
+
+
+Commit :
+$ git commit
+$ git commit -v
