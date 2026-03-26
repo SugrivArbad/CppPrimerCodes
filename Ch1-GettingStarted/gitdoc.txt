@@ -121,5 +121,233 @@ origin  git@github.com:SugrivArbad/CppPrimerCodes.git (push)
 
 
 
+=============================================================================================
+
+###### ADDING SSH KEY and PUSHING CODE TO REMOTE REPOSITOR ################
+
+=============================================================================================
+
+You’ve managed to hit both classic Git mistakes in one go. Impressive efficiency.
+
+Let’s untangle this properly.
+
+🔴 Problem 1:
+
+remote origin already exists
+
+Translation: Git is telling you
+“Stop. You already added this remote. Why are you adding it again?”
+
+✅ Fix:
+
+Check what remote you already have:
+
+git remote -v
+
+If it’s wrong, update it:
+
+git remote set-url origin git@github.com:SugrivArbad/CppPrimerCodes.git
+
+If you really want to nuke it and re-add:
+
+git remote remove origin
+git remote add origin git@github.com:SugrivArbad/CppPrimerCodes.git
+🔴 Problem 2 (Actual blocker):
+
+Permission denied (publickey)
+
+This is GitHub basically saying:
+
+“Nice try. I don’t know who you are.”
+
+You’re using SSH (git@github.com
+) but your machine has no SSH key configured or GitHub doesn’t know about it.
+
+🛠️ Fix SSH Authentication (Do this carefully)
+Step 1: Check if you already have SSH keys
+ls ~/.ssh
+
+Look for:
+
+id_rsa
+id_rsa.pub
+
+or
+
+id_ed25519
+id_ed25519.pub
+
+If nothing is there → you’re starting from zero.
+
+Step 2: Generate SSH key
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+Just keep pressing Enter unless you actually care about custom paths.
+
+Step 3: Start SSH agent
+eval "$(ssh-agent -s)"
+
+Add key:
+
+ssh-add ~/.ssh/id_ed25519
+Step 4: Copy public key
+cat ~/.ssh/id_ed25519.pub
+
+Copy that whole thing.
+
+Step 5: Add it to GitHub
+
+Go to:
+👉 https://github.com/settings/keys
+
+Add new SSH key → paste it.
+
+Step 6: Test connection
+ssh -T git@github.com
+
+Expected:
+
+Hi SugrivArbad! You've successfully authenticated
+Step 7: Push again
+git push -u origin main
+💡 Alternative (if SSH feels like overengineering your life)
+
+Use HTTPS instead:
+
+git remote set-url origin https://github.com/SugrivArbad/CppPrimerCodes.git
+git push -u origin main
+
+It will ask for credentials (or token). Less cool, more reliable.
+
+🧠 What actually happened here
+You added remote twice → Git got annoyed
+You used SSH without setup → GitHub rejected you
+Now Git is just standing there like: “figure your identity first”
+
+Get SSH working once and your future self will thank you instead of rage-googling this again at 2 AM.
 
 
+=======================================================================================================
+
+
+
+
+
+
+
+now how to get this remote code in new folder on another pc
+
+So now you’ve reached the “how do I not reinvent the wheel on another machine” phase. Growth. Beautiful.
+
+You don’t “get remote code” with magic. You clone the repo. That’s literally what Git was built for.
+
+🧠 On the new PC
+✅ Step 1: Open terminal
+
+Go to the folder where you want your project:
+
+cd /c/Users/YourName/SomeFolder
+✅ Step 2: Clone the repo
+
+Since you already suffered through SSH setup once, use it:
+
+git clone git@github.com:SugrivArbad/CppPrimerCodes.git
+
+This will:
+
+Create a folder CppPrimerCodes
+Download all code
+Set up origin automatically (no drama this time)
+✅ Step 3: Enter project
+cd CppPrimerCodes
+✅ Step 4: Verify
+git branch
+
+You should see:
+
+* main
+🔥 Important reality check
+
+On the new PC, GitHub still doesn’t know you.
+
+So before cloning with SSH, you must again:
+
+Generate SSH key
+Add it to GitHub
+
+Same ritual. Different machine. Git does not believe in trust.
+
+💡 Lazy (but practical) alternative
+
+If you don’t want to deal with SSH again:
+
+git clone https://github.com/SugrivArbad/CppPrimerCodes.git
+
+This works immediately, but:
+
+Push will ask for credentials/token
+Slightly less smooth long-term
+⚠️ Common mistake you’re about to make
+
+Trying this nonsense:
+
+git init
+I did this mistake what now
+
+Of course you did. Why use the correct command when there’s a more complicated way to suffer first.
+
+Relax, you didn’t break anything. You just created an empty Git repo that knows nothing about your actual code.
+
+🛠️ Situation:
+
+You ran:
+
+git init
+
+Now your folder is just… a lonely repo with no remote and no files.
+
+✅ Fix Option 1 (Cleanest): Start over properly
+
+If the folder has no important files, just delete it:
+
+cd ..
+rm -rf YourFolderName
+
+Then do it the sane way:
+
+git clone git@github.com:SugrivArbad/CppPrimerCodes.git
+
+Done. No drama.
+
+✅ Fix Option 2 (Recover inside same folder)
+
+If you insist on keeping this folder:
+
+Step 1: Add remote
+git remote add origin git@github.com:SugrivArbad/CppPrimerCodes.git
+Step 2: Pull code
+git pull origin main
+Step 3: If Git complains about unrelated histories (it will, because why not):
+git pull origin main --allow-unrelated-histories
+⚠️ Why this happened (burn this into memory)
+git init → “I am starting a brand new project”
+git clone → “Give me an existing project”
+
+You chose the wrong one, so now Git is confused about your life choices.
+
+🧠 Recommendation (listen carefully)
+
+Use clone when:
+
+Repo already exists on GitHub
+
+Use init when:
+
+You’re starting from scratch
+
+Mixing them is like trying to install Windows inside Windows because you felt adventurous.
+
+Now fix it and move on before Git finds another way to test your patience.
+
+
+=============================================================================================================
