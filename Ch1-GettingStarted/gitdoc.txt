@@ -114,6 +114,10 @@ Specifier Description of Output
 %cr Committer date, relative
 %s Subject
 
+admin@DESKTOP-AD6S8FP MINGW64 /c/Users/Sugriv/Books/C_C++/C++PrimerCodes (main)
+$ git remote -v
+origin  git@github.com:SugrivArbad/CppPrimerCodes.git (fetch)
+origin  git@github.com:SugrivArbad/CppPrimerCodes.git (push)
 
 
 
