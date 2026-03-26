@@ -1,0 +1,7 @@
+1. Write Bookstore program :
+	download header from book's website
+
+2. Push code on remote repository
+	SSH agent key required
+
+3.
